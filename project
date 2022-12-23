@@ -1,0 +1,570 @@
+/***PROBLEM
+        read () function
+        395 number line
+
+    ***/
+
+
+
+
+
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#define len 50
+
+struct node
+{
+    int id;
+    char name[len],author[len],publisher[len];
+    struct node *next;
+    char *na;
+};
+FILE *file;
+struct node *temp,*newnode,*head=0,*next_node, *temp,*pre,*tem;
+int count=0,c=0,ch=0;
+
+void node()
+{
+    newnode=(struct node *) malloc(sizeof(struct node));
+    newnode->next=0;
+
+    printf("\nEnter Book ID Number : ");
+    scanf("%d",&newnode->id);
+
+    printf("\nEnter Book Name : ");
+    scanf(" %[^\n]",newnode->name);
+
+    printf("\nEnter Author Name : ");
+    scanf(" %[^\n]",newnode->author);
+
+    printf("\nEnter Publisher Name : ");
+    scanf(" %[^\n]",newnode->publisher);
+
+}
+
+
+
+void insert_BOOK()
+{
+    if(c==0)
+    {
+        printf("ENTER NUMBER OF BOOKS : ");
+        int n;
+        scanf("%d",&n);
+        while(n)
+        {
+
+
+            node();
+
+            if(head==0)
+            {
+                head=tem=newnode;
+                count++;
+            }
+            else
+            {
+                tem->next=newnode;
+                tem=newnode;
+                count++;
+            }
+            n=n-1;
+        }
+        c++;
+    }
+
+    else
+    {
+        while(1)
+        {
+            int d;
+            printf("1.INSERT FIRST \n2.INSERT LAST\n3.EXIT\n\nENTER CHOICE :");
+            scanf("%d",&d);
+            switch(d)
+            {
+            case 1:
+            {
+                node();
+                newnode->next=head;
+                head=newnode;
+                count++;
+                break;
+            }
+
+            case 2:
+            {
+                node();
+                tem=head;
+                while(tem->next!=0)
+                {
+                    tem=tem->next;
+                }
+                tem->next=newnode;
+                count++;
+                newnode->next=0;
+                break;
+            }
+            case 3:
+                return;
+                printf("ENTER CORRECT OPTION !!!!!!!!");
+                break;
+
+            }
+        }
+    }
+}
+void display_BOOK()
+{
+
+    if(head==0)
+    {
+        printf("LIBARY IS EMPTY\n\n");
+    }
+    else
+    {
+        printf("______________________________________________________________________________");
+        printf("\nID \t\tBook Name\t\tAuthor Name\t\tPublisher Name\n");
+        printf("__\t\t_________\t\t___________\t\t______________");
+        temp=head;
+        while(temp !=0)
+        {
+
+            printf("\n%d\t\t%s\t\t%s  \t\t%s\n",temp->id,temp->name,temp->author,temp->publisher);
+            temp=temp->next;
+        }
+    }
+}
+
+
+void sort_BOOK()
+{
+
+    int temp_id;
+    char temp_name[len],temp_author[len],temp_publisher[len];
+
+    if(head==0)
+    {
+        printf("\n\tLIBARY IS EMPTY ");
+    }
+    else
+    {
+        for(int i=0; i<count; i++)
+        {
+            temp=head;
+            for(int j=0; j<count-i-1 ; j++)
+            {
+                if(temp->id>temp->next->id)
+                {
+                    temp_id=temp->id;
+                    temp->id=temp->next->id;
+                    temp->next->id=temp_id;
+
+
+                    strcpy(temp_name,temp->next->name);
+                    strcpy(temp->next->name,temp->name);
+                    strcpy(temp->name,temp_name);
+
+
+
+                    strcpy(temp_author,temp->author);
+                    strcpy(temp->author,temp->next->author);
+                    strcpy(temp->next->author,temp_author);
+
+
+                    strcpy(temp_publisher,temp->publisher);
+                    strcpy(temp->publisher,temp->next->publisher);
+                    strcpy( temp->next->publisher,temp_publisher);
+
+                }
+                temp=temp->next;
+            }
+        }
+    }
+}
+
+
+void  delete_BOOK_by_id()
+{
+    temp=head;
+    if(head==0)
+    {
+        printf("\nLIBARY IS EMPTY!!!!!!\n INSERT BOOK FIRST!!!!!");
+    }
+    else
+    {
+        printf("\n\t ENTER BOOK ID : ");
+        int ID;
+        scanf("%d",&ID);
+        int pos=1,i=0;
+        int n=0;
+        if(temp->id ==ID)
+        {
+            head=head->next;
+            free(temp);
+            count--;
+        }
+        else
+        {
+            while(temp ->next!=0)
+            {
+                if(ID==temp->id)
+                {
+                    pre->next=temp->next;
+                    free(temp);
+                    count--;
+                    return;
+                }
+                pre=temp;
+                temp=temp->next;
+            }
+            if(temp->id==ID && temp->next==0)
+            {
+                pre->next=0;
+                free(temp);
+                count--;
+                n=n+1;
+                printf("\n\t<<BOOK DELETED SUCCESSFULLY >>");
+            }
+        }
+        if(n==0)
+        {
+            printf("\n\tPLEASE ENTER CORRECT INFORMATION !!!!!!!");
+        }
+    }
+}
+
+search_BOOK_by_id()
+{
+
+    if(head==0)
+    {
+        printf("\n\tLIBARY IS EMPTY ");
+    }
+
+    else
+
+    {
+
+        printf("\nENTER BOOK ID NUMBER : ");
+        int ID;
+        scanf("%d",&ID);
+        temp=head;
+        int n=0;
+        while(temp!=0)
+        {
+            if(temp->id==ID)
+            {
+                printf("______________________________________________________________________________");
+                printf("\nID \t\tBook Name\t\tAuthor Name\t\tPublisher Name\n");
+                printf("__\t\t_________\t\t___________\t\t______________");
+                printf("\n%d\t\t%s\t\t%s  \t\t%s\n",temp->id,temp->name,temp->author,temp->publisher);
+                n=n+1;
+            }
+            temp=temp->next;
+
+        }
+        if(n==0)
+        {
+            printf("\n\tBOOK ID NOT FOUND !!!!!\nPLEASE ENTER CORRECT INFORMATION !!!!!!!");
+        }
+
+    }
+}
+
+
+
+
+
+
+void update_BOOK()
+{
+    printf("ENTER BOOK NAME YOU WANT TO UPDATE :");
+    char nam[50];
+    fflush(stdin);
+    scanf("%[^\n]",nam);
+    temp=head;
+    int n=0;
+    while(temp!=0)
+    {
+        int d;
+        d=strcmp(temp->name,nam);
+        if(d==0)
+        {
+            printf("\n1.UPDATE BOOK ID NUMBER  ");
+
+            printf("\n2.UPDATE BOOK NAME ");
+
+            printf("\n3.UPDATE BOOK AUTHOR NAME  ");
+
+            printf("\n4.UPDATE BOOK PUBLISHER NAME ");
+            printf("\nENTER YOUR CHOICE : ");
+            int c;
+            n=n+1;
+            scanf("%d",&c);
+            switch(c)
+            {
+            case 1:
+                printf("\nENTER UPDATE BOOK ID NUMBER : ");
+                fflush(stdin);
+                scanf("%d",&temp->id);
+                break;
+            case 2:
+                printf("\n.ENTER UPDATE BOOK NAME : ");
+                fflush(stdin);
+                scanf("%[^\n]",temp->name);
+                break;
+            case 3:
+                printf("\n.ENTER UPDATE BOOK AUTHOR NAME : ");
+                fflush(stdin);
+                scanf("%[^\n]",temp->author);
+                break;
+            case 4:
+                printf("\n.ENTER UPDATE BOOK PUBLISHER NAME ");
+                fflush(stdin);
+                scanf("%[^\n]",temp->publisher);
+                break;
+            default:
+                printf("ENTER CORRECT OPTION !!!!!!!!");
+                break;
+
+            }
+
+        }
+        if(d!=0)
+        {
+            printf("\n\tBOOK NAME NOT FOUND !!!!!\nPLEASE ENTER CORRECT INFORMATION !!!!!!!");
+        }
+        temp=temp->next;
+    }
+
+
+}
+
+
+
+
+write()
+{
+    file=fopen("LIBRARY.txt","a");
+    if(file==NULL)
+        printf("\nUNABLE TO OPEN FILE\n");
+    else
+    {
+        /* fprintf(file,"______________________________________________________________________________");
+         fprintf(file,"\nID \t\tBook Name\t\tAuthor Name\t\tPublisher Name\n");
+         fprintf(file,"__\t\t_________\t\t___________\t\t______________");*/
+        temp=head;
+        while(temp!=NULL)
+        {
+            fprintf(file,"\n%d\t\t%s\t\t%s  \t\t%s\n",temp->id,temp->name,temp->author,temp->publisher);
+            temp=temp->next;
+        }
+    }
+    fclose(file);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* newnode=(struct node *) malloc(sizeof(struct node));
+            fscanf(file,"%d",&newnode->id);
+            fscanf(file," %[\n]",newnode->name);
+            fscanf(file," %[^\n]",newnode->author);
+            fscanf(file," %[^\n]",newnode->publisher);
+*/
+
+
+
+
+
+
+
+
+
+read()
+{
+    c++;
+
+
+    file=fopen("LIBRARY.txt","r"); while (!feof(file))
+    if(file==NULL)
+    {
+
+        printf("\nUNABLE TO OPEN FILE\n");
+    }
+
+    else
+    {   while (!feof(file))
+        {
+
+            if(head==0)
+            {
+
+                newnode=(struct node *) malloc(sizeof(struct node));
+                fscanf(file,"%d",&newnode->id);
+                fscanf(file,"%s",newnode->name);
+                fscanf(file,"%s",newnode->author);
+                fscanf(file,"%s",newnode->publisher);
+
+
+                head=tem=newnode;
+                newnode->next=0;
+                count++;
+
+
+
+                newnode=(struct node *) malloc(sizeof(struct node));
+                fscanf(file,"%d",&newnode->id);
+                fscanf(file,"%s",newnode->name);
+                fscanf(file,"%s",newnode->author);
+                fscanf(file,"%s",newnode->publisher);
+
+            }
+            else
+            {
+
+                tem->next=newnode;
+                tem=newnode;
+                newnode->next=0;
+                count++;
+
+                newnode=(struct node *) malloc(sizeof(struct node));
+                fscanf(file,"%d",&newnode->id);
+                fscanf(file,"%s",newnode->name);
+                fscanf(file,"%s",newnode->author);
+                fscanf(file,"%s",newnode->publisher);
+
+
+                /***
+
+                 fscanf(file,"%d",&newnode->id);
+                 fscanf(file," %s",newnode->name);
+                 fscanf(file," %s",newnode->author);
+                 fscanf(file," %s",newnode->publisher);
+
+
+                newnode=(struct node *) malloc(sizeof(struct node));
+                fscanf(file,"%d",&newnode->id);
+                fscanf(file," %[\n]",newnode->name);
+                fscanf(file," %[^\n]",newnode->author);
+                fscanf(file," %[^\n]",newnode->publisher);    */
+
+
+
+            }
+
+
+        }
+        printf("\n\n Count=%d",count);
+
+
+    }
+    fclose(file);
+
+}
+
+
+int main()
+{
+
+    system("color f1");
+
+
+    while(1)
+
+    {
+
+        printf("\n\t\t\t\tLIBARY MANAGEMENT SYSTEM\n\n\n");
+        printf("\t\t\t1.INSERT NEW BOOK  ");
+        printf("\n\t\t\t2.DISPLAY  \n");
+        printf("\t\t\t3.SORT BOOK \n");
+        printf("\t\t\t4.DELETE BOOK BY ID\n");
+        printf("\t\t\t5.SEARCH BOOK BY ID\n");
+        printf("\t\t\t6.UPDATE BOOK BY BOOK NAME\n");
+        printf("\t\t\t7.WRITE IN THE FILE \n");
+        printf("\t\t\t8.READ IN THE FILE\n");
+        printf("\t\t\t9.EXIT");
+
+
+        printf("\nEnter Your Choice : ");
+        int choice;
+        scanf("%d",&choice);
+        // system("clear");
+        system("cls");
+        switch(choice)
+        {
+
+
+        case 1:
+
+            insert_BOOK();
+            break;
+
+
+        case 2:
+
+            display_BOOK();
+            break;
+
+
+        case 3:
+        {
+
+            printf("\n\t\t\tBEFORE SORTED \n");
+            printf("\t\t\t_________________\n");
+            display_BOOK();
+            sort_BOOK();
+            printf("\n\t\t\tAFTER SORTED \n");
+            printf("\t\t\t________________\n");
+            display_BOOK();
+
+        }
+
+        break;
+
+
+        case 4:
+
+            delete_BOOK_by_id();
+            break;
+
+
+        case 5:
+
+            search_BOOK_by_id();
+            break;
+
+        case 6:
+
+            update_BOOK();
+            break;
+
+        case 7:
+
+            write();
+            break;
+
+        case 8:
+
+            read();
+            break;
+
+        case 9:
+            return 0;
+
+
+        default:
+            printf("ENTER CORRECT OPTION !!!!!!!!");
+            break;
+        }
+    }
+}
