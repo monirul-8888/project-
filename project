@@ -19,7 +19,7 @@ struct node
     int id;
     char name[len],author[len],publisher[len];
     struct node *next;
-    char *na;
+    
 };
 FILE *file;
 struct node *temp,*newnode,*head=0,*next_node, *temp,*pre,*tem;
